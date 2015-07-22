@@ -1,0 +1,21 @@
+---
+- hosts: all
+  sudo: yes
+  tasks:
+    - name: cleaning for yum
+      command: /usr/bin/yum clean all
+    - name: set to use only jp mirror for yum
+      lineinfile: >
+        dest="/etc/yum/pluginconf.d/fastestmirror.conf"
+        regexp="^#include_only="
+        line="include_only=.jp"
+    - name: update all package
+      yum: >
+        name="*"
+        state=latest
+        update_cache=no
+
+- hosts: db
+  sudo: yes
+  tasks:
+    - include: db.yml

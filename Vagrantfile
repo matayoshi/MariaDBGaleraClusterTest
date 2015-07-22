@@ -29,6 +29,7 @@ Vagrant.configure(2) do |config|
     # Configure cached packages to be shared between instances of the same base box.
     # More info on http://fgrehm.viewdocs.io/vagrant-cachier/usage
     config.cache.scope = :machine
+    config.cache.auto_detect = true
 
     # OPTIONAL: If you are using VirtualBox, you might want to use that to enable
     # NFS for shared folders. This is also very useful for vagrant-libvirt if you
@@ -113,4 +114,12 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get update
   #   sudo apt-get install -y apache2
   # SHELL
+  config.vm.provision "ansible", run: "always" do |ansible|
+    ansible.groups = {
+      "db" => ["db1", "db2"],
+      "all_groups:children" => ["db"]
+    }
+    ansible.playbook = "provisioning/playbook.yml"
+    ansible.verbose = "v"
+  end
 end

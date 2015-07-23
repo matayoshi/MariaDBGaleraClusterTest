@@ -2,8 +2,8 @@
 - hosts: all
   sudo: yes
   tasks:
-    - name: cleaning for yum
-      command: /usr/bin/yum clean all
+#    - name: cleaning for yum
+#      command: /usr/bin/yum clean all
     - name: set to use only jp mirror for yum
       lineinfile: >
         dest="/etc/yum/pluginconf.d/fastestmirror.conf"

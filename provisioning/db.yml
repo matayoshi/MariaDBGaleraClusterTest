@@ -1,8 +1,9 @@
 ---
 - name: add MariaDB repo
   copy: >
-    src="files/db/MariaDB.repo"
+    src="files/db/yum/repos/MariaDB.repo"
     dest="/etc/yum.repos.d/MariaDB.repo"
+    backup="yes"
     mode="0644"
     owner="root"
     group="root"

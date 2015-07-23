@@ -7,7 +7,9 @@
     - name: set to use only jp mirror for yum
       lineinfile: >
         dest="/etc/yum/pluginconf.d/fastestmirror.conf"
-        regexp="^#include_only="
+        state=present
+        insertafter=EOF
+        regexp="^include_only=.*(?!\.jp)$"
         line="include_only=.jp"
     - name: update all package
       yum: >

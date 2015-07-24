@@ -21,3 +21,11 @@
   sudo: yes
   tasks:
     - include: db.yml
+- hosts: db_master
+  sudo: yes
+  tasks:
+    - include: db_master.yml
+- hosts: db_slave
+  sudo: yes
+  tasks:
+    - include: db_slave.yml

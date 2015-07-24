@@ -35,3 +35,7 @@
     mode="0644"
     owner="root"
     group="root"
+- name: enable MariaDB
+  service: >
+    name="mysql"
+    enabled="no"

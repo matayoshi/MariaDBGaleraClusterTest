@@ -117,6 +117,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible", run: "always" do |ansible|
     ansible.groups = {
       "db" => ["db1", "db2"],
+      "db_master" => ["db1"],
+      "db_slave" => ["db2"],
       "all_groups:children" => ["db"]
     }
     ansible.playbook = "provisioning/playbook.yml"

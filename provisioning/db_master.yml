@@ -1,0 +1,6 @@
+---
+- name: start MariaDB Galera Cluster(master)
+  service: >
+    arguments="--wsrep-new-cluster"
+    name="mysql"
+    state="started"

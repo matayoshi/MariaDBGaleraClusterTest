@@ -10,33 +10,33 @@
 
 # this is only for the mysqld standalone daemon
 [mysqld]
-query_cache_size=0
-query_cache_type=0
-innodb_buffer_pool_size=128M
-innodb_log_files_in_group=2
-innodb_log_file_size=32M
-innodb_file_per_table
-binlog_format=row
-default_storage_engine=InnoDB
-innodb_autoinc_lock_mode=2
-#bind-address=0.0.0.0
 
 #
 # * Galera-related settings
 #
 [galera]
 # Mandatory settings
-wsrep_cluster_name=DBCLUSTER
-wsrep_cluster_address=gcomm://{{ db_ip_address }}
-wsrep_node_address={{ host_ip_address }}
-wsrep_provider='/usr/lib64/galera/libgalera_smm.so'
-wsrep_sst_method=rsync
-wsrep_slave_threads=4
+wsrep_cluster_name      = DBCLUSTER
+wsrep_cluster_address   = gcomm://{{ db_ip_address }}
+wsrep_node_address      = {{ host_ip_address }}
+wsrep_provider          = '/usr/lib64/galera/libgalera_smm.so'
+wsrep_sst_method        = rsync
+binlog_format           = ROW
+default_storage_engine  = InnoDB
+innodb_autoinc_lock_mode    = 2
+innodb_doublewrite      = 1
+query_cache_size        = 0
+query_cache_type        = 0
+wsrep_on                = ON
 
 #
 # Optional setting
-#wsrep_slave_threads=1
-#innodb_flush_log_at_trx_commit=0
+wsrep_slave_threads     = 4
+innodb_flush_log_at_trx_commit  = 0
+innodb_buffer_pool_size = 128M
+innodb_log_files_in_group   = 2
+innodb_log_file_size    = 32M
+innodb_file_per_table
 
 # this is only for embedded server
 [embedded]

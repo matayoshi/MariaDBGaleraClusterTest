@@ -28,7 +28,7 @@ Vagrant.configure(2) do |config|
   if Vagrant.has_plugin?("vagrant-cachier")
     # Configure cached packages to be shared between instances of the same base box.
     # More info on http://fgrehm.viewdocs.io/vagrant-cachier/usage
-    config.cache.scope = :machine
+    config.cache.scope = :box
     config.cache.auto_detect = true
 
     # OPTIONAL: If you are using VirtualBox, you might want to use that to enable
@@ -70,6 +70,14 @@ Vagrant.configure(2) do |config|
     end
     db.vm.hostname = "db2"
     db.vm.network :private_network, ip: "192.168.33.21"
+  end
+
+  config.vm.define "db3" do |db|
+    db.vm.provider "virtualbox" do |vb|
+      vb.name = "mariadb_db3"
+    end
+    db.vm.hostname = "db3"
+    db.vm.network :private_network, ip: "192.168.33.22"
   end
 
   # Create a forwarded port mapping which allows access to a specific port
@@ -116,9 +124,9 @@ Vagrant.configure(2) do |config|
   # SHELL
   config.vm.provision "ansible", run: "always" do |ansible|
     ansible.groups = {
-      "db" => ["db1", "db2"],
+      "db:children" => ["db_master", "db_slave"],
       "db_master" => ["db1"],
-      "db_slave" => ["db2"],
+      "db_slave" => ["db2", "db3"],
       "all_groups:children" => ["db"]
     }
     ansible.playbook = "provisioning/playbook.yml"

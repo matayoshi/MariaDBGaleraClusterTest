@@ -26,7 +26,7 @@ $ vagrant up
 
 ## Licence
 
-[MIT](./LICENCE)
+[MIT](./LICENSE)
 
 ## Author
 

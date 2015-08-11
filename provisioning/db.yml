@@ -7,13 +7,6 @@
     mode="0644"
     owner="root"
     group="root"
-- name: install MariaDB Galera Cluster
-  yum:
-  yum: name={{ item }} state=present
-  with_items:
-    - MariaDB-Galera-server
-    - MariaDB-client
-    - galera
 - name: apply mariadb conf files
   copy: >
     src="files/db/mariadb/conf/{{ item }}"
@@ -35,7 +28,14 @@
     mode="0644"
     owner="root"
     group="root"
-- name: enable MariaDB
+- name: install MariaDB Galera Cluster
+  yum:
+  yum: name={{ item }} state=present
+  with_items:
+    - MariaDB-Galera-server
+    - MariaDB-client
+    - galera
+- name: disable MariaDB(no autostart)
   service: >
     name="mysql"
     enabled="no"

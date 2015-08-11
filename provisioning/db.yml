@@ -7,6 +7,10 @@
     mode="0644"
     owner="root"
     group="root"
+- name: create mariadb conf directory
+  file: >
+    path="/etc/my.cnf.d"
+    state="directory"
 - name: apply mariadb conf files
   copy: >
     src="files/db/mariadb/conf/{{ item }}"

@@ -3,8 +3,11 @@
 # Use it for options that affect all clients, but not the server
 #
 
-
 [client]
+port=3306
+host=127.0.0.1
+user=root
+
 
 # This group is not read by mysql client library,
 # If you use the same .cnf file for MySQL and MariaDB,

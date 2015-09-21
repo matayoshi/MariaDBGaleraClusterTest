@@ -1,5 +1,5 @@
 ---
 - name: start MariaDB Galera Cluster(slave)
   service: >
-    name="mysql"
-    state="started"
+    name=mysql
+    state=started

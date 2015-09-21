@@ -21,6 +21,11 @@
   sudo: yes
   tasks:
     - include: db.yml
+  handlers:
+    - name: condrestart mariadb
+      shell: >
+        service mysql status 2>&1 > /dev/null && service mysql restart
+      ignore_errors: yes
 - hosts: db_master
   sudo: yes
   tasks:

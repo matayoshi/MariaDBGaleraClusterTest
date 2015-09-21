@@ -2,5 +2,16 @@
 - name: start MariaDB Galera Cluster(master)
   service: >
     arguments="--wsrep-new-cluster"
-    name="mysql"
-    state="started"
+    name=mysql
+    state=started
+- name: install MySQL-python
+  yum: >
+    name=MySQL-python
+    state=present
+- name: add MariaDB user
+  mysql_user: >
+    name=client
+    password=""
+    host="%"
+    priv="*.*:ALL"
+    state=present

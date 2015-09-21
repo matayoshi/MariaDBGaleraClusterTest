@@ -37,7 +37,7 @@ innodb_buffer_pool_size = 128M
 innodb_log_files_in_group   = 2
 innodb_log_file_size    = 32M
 innodb_file_per_table
-innodb_data_file_path       = ibdata1:1G
+innodb_data_file_path       = ibdata1:10M:autoextend:max:1G
 innodb_buffer_pool_dump_at_shutdown = 1
 innodb_buffer_pool_load_at_startup  = 1
 innodb_file_format      = Barracuda

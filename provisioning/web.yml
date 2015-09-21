@@ -1,0 +1,66 @@
+---
+- name: install haproxy
+  yum: name=haproxy state=present
+- name: add epel repo
+  yum: >
+    name="http://ftp.iij.ad.jp/pub/linux/fedora/epel/6/i386/epel-release-6-8.noarch.rpm"
+- name: disable epel repo
+  replace: >
+    dest="/etc/yum.repos.d/epel.repo"
+    regexp="enabled *= *1"
+    replace="enabled = 0"
+- name: install socat
+  yum: >
+    name=socat
+    state=present
+    enablerepo=epel
+- name: install mysql
+  yum: >
+    name=mysql
+    state=present
+- name: apply my.cnf
+  copy: >
+    src="files/web/mysql/my.cnf"
+    dest="/etc/my.cnf"
+    backup=yes
+    mode="0644"
+    owner=root
+    group=root
+- name: enable UDP rsyslog
+  lineinfile: >
+    dest="/etc/rsyslog.conf"
+    state=present
+    insertafter="regex"
+    regexp="^#?\$ModLoad imudp$"
+    line="$ModLoad imudp"
+  notify: restart rsyslog
+- name: enable UDP rsyslog
+  lineinfile: >
+    dest="/etc/rsyslog.conf"
+    state=present
+    insertafter="regex"
+    regexp="^#?\$UDPServerRun 514$"
+    line="$UDPServerRun 514"
+  notify: restart rsyslog
+- name: apply rsyslog conf file
+  copy: >
+    src="files/web/haproxy/haproxy.rsyslog"
+    dest="/etc/rsyslog.d/haproxy.conf"
+    backup=yes
+    mode="0644"
+    owner=root
+    group=root
+  notify: restart rsyslog
+- name: apply haproxy.cfg
+  template: >
+    src="files/web/haproxy/haproxy.cfg"
+    dest="/etc/haproxy/haproxy.cfg"
+    backup=yes
+    mode="0644"
+    owner=root
+    group=root
+  notify: reload haproxy
+- name: enable haproxy
+  service: >
+    name=haproxy
+    enabled=yes

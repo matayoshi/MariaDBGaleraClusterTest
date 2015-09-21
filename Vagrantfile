@@ -52,9 +52,13 @@ Vagrant.configure(2) do |config|
     config.hostmanager.include_offline   = true
   end
 
-  #config.vm.define "web" do |web|
-  #  web.vm.hostname = "web"
-  #end
+  config.vm.define "web" do |web|
+    web.vm.provider "virtualbox" do |vb|
+      vb.name = "mariadb_web"
+    end
+    web.vm.hostname = "web"
+    web.vm.network :private_network, ip: "192.168.33.10"
+  end
 
   config.vm.define "db1" do |db|
     db.vm.provider "virtualbox" do |vb|
@@ -109,7 +113,7 @@ Vagrant.configure(2) do |config|
   #   vb.gui = true
   #
   #   # Customize the amount of memory on the VM:
-    vb.memory = "768"
+    vb.memory = "512"
   end
   #
   # View the documentation for the provider you are using for more
@@ -127,7 +131,8 @@ Vagrant.configure(2) do |config|
       "db:children" => ["db_master", "db_slave"],
       "db_master" => ["db1"],
       "db_slave" => ["db2", "db3"],
-      "all_groups:children" => ["db"]
+      "web" => ["web"],
+      "all_groups:children" => ["db", "web"]
     }
     ansible.playbook = "provisioning/playbook.yml"
     ansible.verbose = "v"

@@ -34,3 +34,17 @@
   sudo: yes
   tasks:
     - include: db_slave.yml
+
+- hosts: web
+  sudo: yes
+  tasks:
+    - include: web.yml
+  handlers:
+    - name: restart rsyslog
+      service: >
+        name=rsyslog
+        state=restarted
+    - name: reload haproxy
+      service: >
+        name=haproxy
+        state=reloaded

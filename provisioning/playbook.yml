@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - name: install libselinux-python
       yum: >
@@ -22,7 +22,7 @@
         update_cache=no
 
 - hosts: db
-  sudo: yes
+  become: yes
   tasks:
     - include: db.yml
   handlers:
@@ -31,16 +31,16 @@
         service mysql status 2>&1 > /dev/null && service mysql restart
       ignore_errors: yes
 - hosts: db_master
-  sudo: yes
+  become: yes
   tasks:
     - include: db_master.yml
 - hosts: db_slave
-  sudo: yes
+  become: yes
   tasks:
     - include: db_slave.yml
 
 - hosts: web
-  sudo: yes
+  become: yes
   tasks:
     - include: web.yml
   handlers:

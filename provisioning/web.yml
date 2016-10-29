@@ -3,17 +3,12 @@
   yum: name=haproxy state=present
 - name: add epel repo
   yum: >
-    name="http://ftp.iij.ad.jp/pub/linux/fedora/epel/6/i386/epel-release-6-8.noarch.rpm"
-- name: disable epel repo
-  replace: >
-    dest="/etc/yum.repos.d/epel.repo"
-    regexp="enabled *= *1"
-    replace="enabled = 0"
+    name=epel-release
+    state=present
 - name: install socat
   yum: >
     name=socat
     state=present
-    enablerepo=epel
 - name: install mysql
   yum: >
     name=mysql

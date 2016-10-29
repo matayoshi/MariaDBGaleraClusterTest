@@ -44,3 +44,23 @@
   service: >
     name=mysql
     enabled=no
+- name: Install require package(seport)
+  yum: >
+    name=policycoreutils-python
+    state=present
+- name: SELinux open the relevant tcp ports(MariaDB)
+  seport: >
+    ports=4444,4567,4568
+    proto=tcp
+    setype=mysqld_port_t
+    state=present
+- name: SELinux open the relevant udp ports(MariaDB)
+  seport: >
+    ports=4567
+    proto=udp
+    setype=mysqld_port_t
+    state=present
+- name: SELinux to permissive mode(MariaDB)
+  selinux_permissive: >
+    name=mysqld_t
+    permissive=true

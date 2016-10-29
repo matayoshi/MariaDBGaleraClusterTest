@@ -2,6 +2,10 @@
 - hosts: all
   sudo: yes
   tasks:
+    - name: install libselinux-python
+      yum: >
+        name=libselinux-python
+        state=latest
 #    - name: cleaning for yum
 #      command: /usr/bin/yum clean all
     - name: set to use only jp mirror for yum
